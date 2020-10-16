@@ -21,6 +21,12 @@ private slots:
     void on_btnConnect_clicked();
 
 private:
+    bool connected = false;
+
     Ui::MainWindow *ui;
+    void connect();
+    void disconnect();
+    void toggleEnabledControls();
+    void toggleWidgetEnabled(QWidget *qWidget);
 };
 #endif // MAINWINDOW_H
