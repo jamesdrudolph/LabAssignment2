@@ -15,6 +15,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_horizontalSlider_valueChanged(int value);
+
+    void on_btnConnect_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
