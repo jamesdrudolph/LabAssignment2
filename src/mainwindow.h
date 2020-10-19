@@ -19,9 +19,9 @@ public:
 private slots:
     void on_btnConnect_clicked();
 
-    void on_sliderValue_valueChanged(int value);
+    void on_sliderContrastValue_valueChanged(int value);
 
-    void on_btnSend_clicked();
+    void on_sliderBrightnessValue_valueChanged(int value);
 
 private:
     bool connected = false;
@@ -32,5 +32,6 @@ private:
     void disconnect();
     void toggleEnabledControls();
     void toggleWidgetEnabled(QWidget *qWidget);
+    void sendValue(int value, QString valueType);
 };
 #endif // MAINWINDOW_H

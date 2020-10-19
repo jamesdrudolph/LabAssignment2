@@ -16,10 +16,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_sliderValue_valueChanged(int value)
-{
-    ui->lblSliderValue->setText(QString::number(value));
-}
 
 void MainWindow::on_btnConnect_clicked()
 {
@@ -30,16 +26,27 @@ void MainWindow::on_btnConnect_clicked()
     }
 }
 
-void MainWindow::on_btnSend_clicked()
+void MainWindow::on_sliderContrastValue_valueChanged(int value)
 {
-    int intValue = ui->sliderValue->value();
-    QString strValue = QString::number(intValue);
+    ui->lblContrastValue->setText("Contrast: " + QString::number(value));
+    sendValue(ui->sliderContrastValue->value(), "C");
+}
 
-    if (intValue <= 9) {
-        strValue = "0" + strValue;
+void MainWindow::on_sliderBrightnessValue_valueChanged(int value)
+{
+    ui->lblBrightnessValue->setText("Brightness: " + QString::number(value));
+    sendValue(ui->sliderBrightnessValue->value(), "B");
+}
+
+void MainWindow::sendValue(int value, QString valueType) {
+    QString strToSend = QString::number(value);
+
+    if (value <= 9) {
+        strToSend = "0" + strToSend;
     }
 
-    udpSocket->write(strValue.toStdString().c_str());
+    strToSend = valueType + strToSend;
+    udpSocket->write(strToSend.toStdString().c_str());
 }
 
 void MainWindow::connect() {
@@ -47,7 +54,7 @@ void MainWindow::connect() {
     bool connectSuccess = false;
 
     //TODO: make this not hardcoded
-    udpSocket->connectToHost("192.168.0.104", port);
+    udpSocket->connectToHost("192.168.0.102", port);
 
     //TODO: test if connection is successful
     connectSuccess = true;
@@ -77,9 +84,10 @@ void MainWindow::disconnect() {
 
 void MainWindow::toggleEnabledControls() {
     //toggle enabled of send controls
-    toggleWidgetEnabled(ui->lblSliderValue);
-    toggleWidgetEnabled(ui->btnSend);
-    toggleWidgetEnabled(ui->sliderValue);
+    toggleWidgetEnabled(ui->lblBrightnessValue);
+    toggleWidgetEnabled(ui->lblContrastValue);
+    toggleWidgetEnabled(ui->sliderBrightnessValue);
+    toggleWidgetEnabled(ui->sliderContrastValue);
 
     //toggle enabled of connect controls
     toggleWidgetEnabled(ui->lblIP);

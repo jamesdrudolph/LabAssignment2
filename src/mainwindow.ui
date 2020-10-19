@@ -7,16 +7,10 @@
     <x>0</x>
     <y>0</y>
     <width>199</width>
-    <height>193</height>
+    <height>264</height>
    </rect>
   </property>
   <property name="minimumSize">
-   <size>
-    <width>199</width>
-    <height>193</height>
-   </size>
-  </property>
-  <property name="maximumSize">
    <size>
     <width>199</width>
     <height>193</height>
@@ -26,13 +20,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
       <width>178</width>
-      <height>172</height>
+      <height>243</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -139,9 +133,9 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QSlider" name="sliderValue">
+          <widget class="QSlider" name="sliderContrastValue">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -151,12 +145,12 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lblSliderValue">
+          <widget class="QLabel" name="lblContrastValue">
            <property name="enabled">
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>0</string>
+            <string>Contrast: 0</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -166,42 +160,29 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnSend">
+          <widget class="QSlider" name="sliderBrightnessValue">
            <property name="enabled">
             <bool>false</bool>
            </property>
-           <property name="text">
-            <string>Send</string>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+          <widget class="QLabel" name="lblBrightnessValue">
+           <property name="enabled">
+            <bool>false</bool>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
+           <property name="text">
+            <string>Brightness: 0</string>
            </property>
-          </spacer>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
