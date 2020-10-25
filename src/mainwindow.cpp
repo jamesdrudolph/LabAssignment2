@@ -52,13 +52,11 @@ void MainWindow::sendValue(int value, QString valueType) {
 void MainWindow::connect() {
     int port = ui->sbPort->value();
     bool connectSuccess = false;
+    QString ip = ui->txtIP->text(); //"192.168.1.89"
 
-    //TODO: make this not hardcoded
-    udpSocket->connectToHost("192.168.0.102", port);
+    udpSocket->connectToHost(ip, port);
 
-    //TODO: test if connection is successful
-    connectSuccess = true;
-
+    connectSuccess = udpSocket->waitForConnected(1000); //waits 1000 ms, returns t/f;
     if (connectSuccess) {
         connected = true;
         ui->btnConnect->setText("Disconnect");
@@ -72,8 +70,7 @@ void MainWindow::disconnect() {
     udpSocket->write("FF");
     udpSocket->disconnectFromHost();
 
-    //TODO: test if disconnection is successful
-    disconnectSuccess = true;
+    disconnectSuccess = (udpSocket->state() == QAbstractSocket::UnconnectedState || udpSocket->waitForDisconnected(1000));
 
     if (disconnectSuccess) {
         connected = false;

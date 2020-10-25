@@ -46,7 +46,7 @@
            <item>
             <widget class="QLineEdit" name="txtIP">
              <property name="inputMask">
-              <string>000.000.000.000;_</string>
+              <string/>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
