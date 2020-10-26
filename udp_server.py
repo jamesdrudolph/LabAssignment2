@@ -3,12 +3,10 @@ import time
 import socket
 
 # HPS/FPGA Memory Addresses
-HW_REGS_BASE = 0xFC000000
-HW_REGS_SPAN = 0x04000000
-HW_REGS_MASK = HW_REGS_SPAN - 1
-ALT_LWFPGASLVS_OFST = 0xFF200000
-SEGS = 0x140
-SEGS2 = 0x150
+LWFPGASLVS_OFST = 0xFF200000 #FPGA slaves accessed with lightweight HPS-to-FPGA bridge
+LWFPGASLVS_SIZE = 0x00200000 #2MB in length
+SEGS = 0x00000140 #user defined segs[0-2] address
+SEGS2 = 0x00000150 #user defined segs[3-5] address
 
 # UDP Server Info
 UDP_IP = "192.168.0.100"
@@ -53,15 +51,11 @@ if fd == -1:
 
 # Map /dev/mem to writable block of memory
 vb = mmap.mmap(
-    fd,
-    HW_REGS_SPAN,
+    fd, #file /dev/mem
+    LWFPGASLVS_SIZE, #length
     flags=mmap.MAP_SHARED,
-    offset=HW_REGS_BASE
+    offset=LWFPGASLVS_OFST
 )
-
-# 7-seg base address
-pos = (ALT_LWFPGASLVS_OFST + SEGS) & HW_REGS_MASK
-pos2 = (ALT_LWFPGASLVS_OFST + SEGS2) & HW_REGS_MASK
 
 def display(a, b, c, position):
     vb.seek(position)
@@ -73,13 +67,13 @@ def display(a, b, c, position):
 
 # Sanity check
 for i in range(0, 10):
-    display(i, i, i, pos)
-    display(i, i, i, pos2)
+    display(i, i, i, SEGS)
+    display(i, i, i, SEGS2)
     time.sleep(0.1)
 
 # Reset
-display(" ", "-", "-", pos)
-display("-", "-", " ", pos2)
+display(" ", "-", "-", SEGS)
+display("-", "-", " ", SEGS2)
 
 # UDP Setup
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -92,13 +86,13 @@ while True:
     data, addr = sock.recvfrom(3)
     if data == "FF":
         # Cleanup
-        display(" ", "-", "-", pos)
-        display("-", "-", " ", pos2)
+        display(" ", "-", "-", SEGS)
+        display("-", "-", " ", SEGS2)
         vb.close()
         os.close(fd)
         break
     else:
         if data[0] == "B":
-            display(" ", data[1], data[2], pos)
+            display(" ", data[1], data[2], SEGS)
         elif data[0] == "C":
-            display(data[1], data[2], " ", pos2)
+            display(data[1], data[2], " ", SEGS2)
